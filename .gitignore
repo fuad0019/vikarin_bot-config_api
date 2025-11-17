@@ -1,0 +1,22 @@
+# Build artifacts
+/target/
+/build/
+/.wrangler/
+/.parcel-cache/
+/dist/
+
+# Node
+/node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Env & local overrides
+.env
+.env.*
+.dev.vars
+
+# Editors & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
