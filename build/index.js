@@ -1,4 +1,4 @@
-import wasmModule from "./index_bg.wasm";
+import source wasmModule from "./index_bg.wasm";
 
 let wasm;
 
