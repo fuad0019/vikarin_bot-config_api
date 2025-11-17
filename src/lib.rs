@@ -8,7 +8,7 @@ struct TimeSlot {
     end_time: String,
 }
 
-//Test comment
+//Test comment is here
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 struct BotConfig {
