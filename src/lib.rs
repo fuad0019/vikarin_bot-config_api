@@ -37,6 +37,15 @@ fn log_json<T: Serialize>(label: &str, value: &T) {
     }
 }
 
+fn add_cors_headers(resp: &mut Response) -> Result<()> {
+    let headers = resp.headers_mut();
+    headers.set("Access-Control-Allow-Origin", "*")?;
+    headers.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")?;
+    headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization")?;
+    headers.set("Access-Control-Max-Age", "86400")?;
+    Ok(())
+}
+
 async fn load_or_init_config(kv: &KvStore) -> Result<BotConfig> {
     let existing = kv.get(KV_KEY).text().await?;
     if let Some(txt) = existing {
@@ -67,10 +76,12 @@ fn parse_query(req: &Request) -> Result<std::collections::HashMap<String, String
 
 async fn handle_get_config(_req: Request, ctx: RouteContext<()>) -> Result<Response> {
     let kv = ctx.kv("CONFIG_KV")?;
-    console_log!("request: GET /config");
+    console_log!("request: GET /config Fuad1234");
     let cfg = load_or_init_config(&kv).await?;
     log_json("response /config", &cfg);
-    Response::from_json(&cfg)
+    let mut resp = Response::from_json(&cfg)?;
+    add_cors_headers(&mut resp)?;
+    Ok(resp)
 }
 
 async fn handle_update(req: Request, ctx: RouteContext<()>) -> Result<Response> {
@@ -99,7 +110,9 @@ async fn handle_update(req: Request, ctx: RouteContext<()>) -> Result<Response> 
 
     save_config(&kv, &cfg).await?;
     log_json("response /update", &cfg);
-    Response::from_json(&cfg)
+    let mut resp = Response::from_json(&cfg)?;
+    add_cors_headers(&mut resp)?;
+    Ok(resp)
 }
 
 #[event(fetch, respond_with_errors)]
@@ -110,10 +123,19 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
         console_log!("RUST_LOG not set; using default info level");
     }
 
+    // Handle CORS preflight
+    if req.method() == Method::Options {
+        let mut resp = Response::ok("")?;
+        add_cors_headers(&mut resp)?;
+        return Ok(resp);
+    }
+
     let router = Router::new();
-    router
+    let mut resp = router
         .get_async("/config", handle_get_config)
         .get_async("/update", handle_update)
         .run(req, env)
-        .await
+        .await?;
+    add_cors_headers(&mut resp)?;
+    Ok(resp)
 }

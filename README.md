@@ -40,10 +40,41 @@ wrangler dev
 # Open http://127.0.0.1:8787/config
 ```
 
+### Building Artifacts (Git Integration Flow)
+
+Cloudflare’s Git build environment for this project does not include `cargo`. You build locally and commit the generated `build/` directory.
+
+```powershell
+# Ensure cargo bin path available
+$env:Path += ";$HOME\.cargo\bin"
+
+# (One-time) Install worker-build
+cargo install worker-build
+
+# Clean previous artifacts
+Remove-Item -Recurse -Force build -ErrorAction SilentlyContinue
+
+# Build release artifacts
+worker-build --release
+
+# Fix first-line non‑standard import if present
+node scripts/patch-build.mjs   # or: pwsh -File scripts/patch-build.ps1
+
+# Commit artifacts
+git add build
+git commit -m "build: update worker artifacts"
+git push
+```
+
+After the push, Cloudflare Git integration deploys using `wrangler.toml` (`main = build/shim.js`).
+
 ## Deploy
 
-This repo is connected to Cloudflare’s Git integration. To deploy, push to the configured branch. You can also deploy manually:
+Deployment options:
+1. Git Integration (recommended): Push with updated `build/` artifacts → automatic deploy.
+2. Manual: Run `wrangler deploy` locally after building (does not require committing artifacts).
 
+Manual deploy:
 ```powershell
 wrangler deploy
 ```
@@ -70,3 +101,6 @@ Set `enabled = true` to forward logs/metrics in Cloudflare.
 
 ## Notes
 - Workers KV is eventually consistent; for stronger consistency, consider a Durable Object to store the config.
+- Generated `build/index.js` may contain a non‑standard first line `import source wasmModule ...`; patch scripts normalize it to `import wasmModule ...`.
+- Git install of `worker-build` currently fails (template placeholders); use crates.io `cargo install worker-build`.
+- Rebuild artifacts after any change to Rust source before pushing for Git‑based deploys.
