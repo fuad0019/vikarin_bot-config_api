@@ -1,71 +1,64 @@
-# Vikarin Backend - Minimal Config API
+# Vikarin Config API — Cloudflare Workers (Rust)
 
-A tiny Rust API (Axum) with two GET endpoints to read and update `bot_config.json` in-place.
+This is a Cloudflare Workers port of the API using the `worker` crate (wasm) and Workers KV for persistence (no filesystem).
 
-- `GET /config` — returns the current config as JSON
-- `GET /update` — updates fields via query params, persists to `bot_config.json`, and returns the updated JSON
+Endpoints:
+- GET `/config` — returns current config from KV (creates default if missing)
+- GET `/update` — updates any provided fields via query params and persists to KV
 
-The server reads `bot_config.json` from the current working directory. If missing, it creates one with these defaults:
+KV key used: `bot_config`
 
-```json
-{
-  "max_won_bookings": 3,
-  "time_slots": [{ "start_time": "09:00", "end_time": "17:00" }],
-  "paused": false,
-  "interval_seconds": 5.0
-}
-```
-
-## Build and Run
-
-From the `vikarin-backend` folder:
+## Prereqs
+- Rust + `wasm32-unknown-unknown` target
+- `wrangler` CLI (Cloudflare)
+- `worker-build` helper for Rust Workers
 
 ```powershell
-cargo run
+rustup target add wasm32-unknown-unknown
+cargo install worker-build
+npm i -g wrangler
 ```
 
-This starts the server on `http://localhost:8080`.
-
-## Examples (Windows PowerShell)
-
-Use `curl.exe` to avoid PowerShell's alias behavior:
-
-- Get config
+## Setup KV
+From this `workers` folder:
 
 ```powershell
-curl.exe http://localhost:8080/config
+# Create a KV namespace and capture the id
+wrangler kv namespace create CONFIG_KV
+
+# Edit wrangler.toml and set the produced `id` for CONFIG_KV
+# Example snippet:
+# [[kv_namespaces]]
+# binding = "CONFIG_KV"
+# id = "<YOUR_ID>"
 ```
 
-- Update simple fields
-
+## Dev
 ```powershell
-# Pause the bot and set intervals
-curl.exe "http://localhost:8080/update?paused=true&interval_seconds=10"
-
-# Set max_won_bookings
-curl.exe "http://localhost:8080/update?max_won_bookings=5"
+cd workers
+wrangler dev
+# Open http://127.0.0.1:8787/config
 ```
 
-- Replace `time_slots` (pass JSON as a single query param string):
-
+## Publish
 ```powershell
+cd workers
+wrangler publish
+```
+
+## Examples (PowerShell)
+```powershell
+# Get config
+curl.exe http://127.0.0.1:8787/config
+
+# Update paused and interval
+curl.exe "http://127.0.0.1:8787/update?paused=true&interval_seconds=10"
+
+# Replace time_slots
 $slots = '[{"start_time":"08:00","end_time":"12:00"},{"start_time":"13:00","end_time":"18:00"}]'
-curl.exe "http://localhost:8080/update?time_slots=$($slots)"
+curl.exe "http://127.0.0.1:8787/update?time_slots=$($slots)"
 ```
 
-- Combine multiple updates
-
-```powershell
-$slots = '[{"start_time":"09:30","end_time":"16:30"}]'
-curl.exe "http://localhost:8080/update?paused=false&max_won_bookings=4&interval_seconds=7.5&time_slots=$($slots)"
-```
-
-Notes:
-- All query params are optional; only provided ones are updated.
-- On success, each call returns the full, updated config JSON.
-
-## Project
-
-- `src/main.rs` — server and handlers
-- `Cargo.toml` — dependencies
-- `bot_config.json` — persisted config (already in your workspace)
+## Notes
+- Workers KV is eventually consistent; for stronger consistency, consider a Durable Object to store the config.
+- The existing Axum server uses the local filesystem (`bot_config.json`). Workers cannot use a filesystem, so this port uses KV.
