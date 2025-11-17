@@ -1,4 +1,5 @@
-import source wasmModule from "./index_bg.wasm";
+// Adjusted import: remove non-standard `source` keyword unsupported by Wrangler/esbuild.
+import wasmModule from "./index_bg.wasm";
 
 let wasm;
 
