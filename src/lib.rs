@@ -8,6 +8,8 @@ struct TimeSlot {
     end_time: String,
 }
 
+//Test comment
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 struct BotConfig {
     max_won_bookings: u32,

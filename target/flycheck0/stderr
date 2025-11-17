@@ -1,60 +1,12 @@
-   0.126510700s  INFO prepare_target{force=false package_id=vikarin-workers v0.1.0 (C:\Users\fuad_\Documents\vikarin-backend) target="vikarin-workers"}: cargo::core::compiler::fingerprint: fingerprint error for vikarin-workers v0.1.0 (C:\Users\fuad_\Documents\vikarin-backend)/Check { test: false }/TargetInner { name: "vikarin-workers", doc: true, ..: with_path("C:\\Users\\fuad_\\Documents\\vikarin-backend\\src\\main.rs", Edition2021) }
-   0.126561200s  INFO prepare_target{force=false package_id=vikarin-workers v0.1.0 (C:\Users\fuad_\Documents\vikarin-backend) target="vikarin-workers"}: cargo::core::compiler::fingerprint:     err: failed to read `C:\Users\fuad_\Documents\vikarin-backend\target\debug\.fingerprint\vikarin-workers-164fd85d7d0527b2\bin-vikarin-workers`
-
-Caused by:
-    Den angivne fil blev ikke fundet. (os error 2)
-
-Stack backtrace:
-   0: git_midx_writer_dump
-   1: git_midx_writer_dump
-   2: git_midx_writer_dump
-   3: git_midx_writer_dump
-   4: git_filter_source_repo
-   5: git_filter_source_repo
-   6: git_filter_source_repo
-   7: git_filter_source_repo
-   8: git_filter_source_repo
-   9: git_filter_source_repo
-  10: git_filter_source_repo
-  11: git_libgit2_prerelease
-  12: <unknown>
-  13: <unknown>
-  14: <unknown>
-  15: <unknown>
-  16: git_midx_writer_dump
-  17: git_filter_source_repo
-  18: git_midx_writer_dump
-  19: BaseThreadInitThunk
-  20: RtlUserThreadStart
-   0.138311300s  INFO prepare_target{force=false package_id=vikarin-workers v0.1.0 (C:\Users\fuad_\Documents\vikarin-backend) target="vikarin-workers"}: cargo::core::compiler::fingerprint: fingerprint error for vikarin-workers v0.1.0 (C:\Users\fuad_\Documents\vikarin-backend)/Check { test: true }/TargetInner { name: "vikarin-workers", doc: true, ..: with_path("C:\\Users\\fuad_\\Documents\\vikarin-backend\\src\\main.rs", Edition2021) }
-   0.138341500s  INFO prepare_target{force=false package_id=vikarin-workers v0.1.0 (C:\Users\fuad_\Documents\vikarin-backend) target="vikarin-workers"}: cargo::core::compiler::fingerprint:     err: failed to read `C:\Users\fuad_\Documents\vikarin-backend\target\debug\.fingerprint\vikarin-workers-2702ce13b11d573c\test-bin-vikarin-workers`
-
-Caused by:
-    Den angivne fil blev ikke fundet. (os error 2)
-
-Stack backtrace:
-   0: git_midx_writer_dump
-   1: git_midx_writer_dump
-   2: git_midx_writer_dump
-   3: git_midx_writer_dump
-   4: git_filter_source_repo
-   5: git_filter_source_repo
-   6: git_filter_source_repo
-   7: git_filter_source_repo
-   8: git_filter_source_repo
-   9: git_filter_source_repo
-  10: git_filter_source_repo
-  11: git_libgit2_prerelease
-  12: <unknown>
-  13: <unknown>
-  14: <unknown>
-  15: <unknown>
-  16: git_midx_writer_dump
-  17: git_filter_source_repo
-  18: git_midx_writer_dump
-  19: BaseThreadInitThunk
-  20: RtlUserThreadStart
+   0.094235300s  INFO prepare_target{force=false package_id=vikarin-workers v0.1.0 (C:\Users\fuad_\Documents\vikarin-backend) target="vikarin_workers"}: cargo::core::compiler::fingerprint: stale: changed "C:\\Users\\fuad_\\Documents\\vikarin-backend\\src\\lib.rs"
+   0.094271700s  INFO prepare_target{force=false package_id=vikarin-workers v0.1.0 (C:\Users\fuad_\Documents\vikarin-backend) target="vikarin_workers"}: cargo::core::compiler::fingerprint:           (vs) "C:\\Users\\fuad_\\Documents\\vikarin-backend\\target\\debug\\.fingerprint\\vikarin-workers-7363fa5c4084147e\\dep-lib-vikarin_workers"
+   0.094278000s  INFO prepare_target{force=false package_id=vikarin-workers v0.1.0 (C:\Users\fuad_\Documents\vikarin-backend) target="vikarin_workers"}: cargo::core::compiler::fingerprint:                FileTime { seconds: 13407856708, nanos: 68049600 } < FileTime { seconds: 13407856709, nanos: 288646500 }
+   0.094487200s  INFO prepare_target{force=false package_id=vikarin-workers v0.1.0 (C:\Users\fuad_\Documents\vikarin-backend) target="vikarin_workers"}: cargo::core::compiler::fingerprint: fingerprint dirty for vikarin-workers v0.1.0 (C:\Users\fuad_\Documents\vikarin-backend)/Check { test: false }/TargetInner { name_inferred: true, ..: lib_target("vikarin_workers", ["cdylib"], "C:\\Users\\fuad_\\Documents\\vikarin-backend\\src\\lib.rs", Edition2021) }
+   0.094519000s  INFO prepare_target{force=false package_id=vikarin-workers v0.1.0 (C:\Users\fuad_\Documents\vikarin-backend) target="vikarin_workers"}: cargo::core::compiler::fingerprint:     dirty: FsStatusOutdated(StaleItem(ChangedFile { reference: "C:\\Users\\fuad_\\Documents\\vikarin-backend\\target\\debug\\.fingerprint\\vikarin-workers-7363fa5c4084147e\\dep-lib-vikarin_workers", reference_mtime: FileTime { seconds: 13407856708, nanos: 68049600 }, stale: "C:\\Users\\fuad_\\Documents\\vikarin-backend\\src\\lib.rs", stale_mtime: FileTime { seconds: 13407856709, nanos: 288646500 } }))
+   0.113223200s  INFO prepare_target{force=false package_id=vikarin-workers v0.1.0 (C:\Users\fuad_\Documents\vikarin-backend) target="vikarin_workers"}: cargo::core::compiler::fingerprint: stale: changed "C:\\Users\\fuad_\\Documents\\vikarin-backend\\src\\lib.rs"
+   0.113243300s  INFO prepare_target{force=false package_id=vikarin-workers v0.1.0 (C:\Users\fuad_\Documents\vikarin-backend) target="vikarin_workers"}: cargo::core::compiler::fingerprint:           (vs) "C:\\Users\\fuad_\\Documents\\vikarin-backend\\target\\debug\\.fingerprint\\vikarin-workers-26b54d83a0f5eee3\\dep-test-lib-vikarin_workers"
+   0.113248800s  INFO prepare_target{force=false package_id=vikarin-workers v0.1.0 (C:\Users\fuad_\Documents\vikarin-backend) target="vikarin_workers"}: cargo::core::compiler::fingerprint:                FileTime { seconds: 13407856708, nanos: 68049600 } < FileTime { seconds: 13407856709, nanos: 288646500 }
+   0.113384900s  INFO prepare_target{force=false package_id=vikarin-workers v0.1.0 (C:\Users\fuad_\Documents\vikarin-backend) target="vikarin_workers"}: cargo::core::compiler::fingerprint: fingerprint dirty for vikarin-workers v0.1.0 (C:\Users\fuad_\Documents\vikarin-backend)/Check { test: true }/TargetInner { name_inferred: true, ..: lib_target("vikarin_workers", ["cdylib"], "C:\\Users\\fuad_\\Documents\\vikarin-backend\\src\\lib.rs", Edition2021) }
+   0.113403100s  INFO prepare_target{force=false package_id=vikarin-workers v0.1.0 (C:\Users\fuad_\Documents\vikarin-backend) target="vikarin_workers"}: cargo::core::compiler::fingerprint:     dirty: FsStatusOutdated(StaleItem(ChangedFile { reference: "C:\\Users\\fuad_\\Documents\\vikarin-backend\\target\\debug\\.fingerprint\\vikarin-workers-26b54d83a0f5eee3\\dep-test-lib-vikarin_workers", reference_mtime: FileTime { seconds: 13407856708, nanos: 68049600 }, stale: "C:\\Users\\fuad_\\Documents\\vikarin-backend\\src\\lib.rs", stale_mtime: FileTime { seconds: 13407856709, nanos: 288646500 } }))
     Checking vikarin-workers v0.1.0 (C:\Users\fuad_\Documents\vikarin-backend)
-error: could not compile `vikarin-workers` (bin "vikarin-workers") due to 15 previous errors
-warning: build failed, waiting for other jobs to finish...
-error: could not compile `vikarin-workers` (bin "vikarin-workers" test) due to 15 previous errors
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.39s

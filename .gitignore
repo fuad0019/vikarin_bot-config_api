@@ -1,6 +1,6 @@
-# Build artifacts (keep build/ committed for Workers entrypoint)
+# Build artifacts
 /target/
-# /build/ (INTENTIONALLY TRACKED)
+/build/
 /.wrangler/
 /.parcel-cache/
 /dist/

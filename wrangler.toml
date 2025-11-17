@@ -1,9 +1,12 @@
 name = "vikarin-config-api"
-main = "build/index.js"
+main = "build/shim.js"
 compatibility_date = "2024-10-01"
 workers_dev = true
 account_id = "1955d57a0463daf8b0e73b66462f1357"
 
+[build]
+# Cloudflare / CI build: compile Rust to WASM and generate build/shim.js
+command = "cargo install -q worker-build || true && worker-build --release"
 
 [observability]
 [observability.logs]
@@ -19,6 +22,5 @@ binding = "CONFIG_KV"
 # For local `wrangler dev`, no `id` is required. Set this on publish.
 id = "07b0df750ada4a4086922b50586965f1"
 
-# For local dev, build once with `worker-build --release` to generate `build/`.
-# With the [build] command below CI and `wrangler deploy` will build automatically.
+# For local dev: run `worker-build --release` to create `build/` (shim.js, index.js, wasm).
 
