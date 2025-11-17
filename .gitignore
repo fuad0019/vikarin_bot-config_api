@@ -1,6 +1,5 @@
 # Build artifacts
 /target/
-/build/
 /.wrangler/
 /.parcel-cache/
 /dist/
