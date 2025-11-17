@@ -1,8 +1,9 @@
 name = "vikarin-config-api"
-main = "build/worker/shim.mjs"
+main = "build/index.js"
 compatibility_date = "2024-10-01"
 workers_dev = true
 account_id = "1955d57a0463daf8b0e73b66462f1357"
+
 
 [observability]
 [observability.logs]
@@ -19,4 +20,5 @@ binding = "CONFIG_KV"
 id = "07b0df750ada4a4086922b50586965f1"
 
 # For local dev, build once with `worker-build --release` to generate `build/`.
-# You can re-run the build manually when code changes.
+# With the [build] command below CI and `wrangler deploy` will build automatically.
+
