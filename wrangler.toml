@@ -2,7 +2,7 @@ name = "vikarin-config-api"
 main = "build/shim.js"
 compatibility_date = "2024-10-01"
 workers_dev = true
-account_id = "1955d57a0463daf8b0e73b66462f1357"
+account_id = "ad9560f088d539c97b198f7b0e0f0c94"
  # CI will run worker-build prior to wrangler deploy (see workflow).
 
 [observability]
@@ -17,7 +17,7 @@ persist = true
 [[kv_namespaces]]
 binding = "CONFIG_KV"
 # For local `wrangler dev`, no `id` is required. Set this on publish.
-id = "07b0df750ada4a4086922b50586965f1"
+id = "8d296667d3af4a7f80d854d0a4b49243"
 
 # For local dev: run `worker-build --release` to create `build/` (shim.js, index.js, wasm).
 
