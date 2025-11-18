@@ -46,6 +46,15 @@ fn add_cors_headers(resp: &mut Response) -> Result<()> {
     Ok(())
 }
 
+fn add_no_cache_headers(resp: &mut Response) -> Result<()> {
+    let headers = resp.headers_mut();
+    headers.set("Cache-Control", "no-store")?; // strongest directive for browsers
+    headers.set("Pragma", "no-cache")?;        // legacy HTTP/1.0 clients
+    headers.set("Expires", "0")?;              // legacy caches
+    headers.set("CDN-Cache-Control", "no-store")?; // Cloudflare honors this specifically
+    Ok(())
+}
+
 async fn load_or_init_config(kv: &KvStore) -> Result<BotConfig> {
     let existing = kv.get(KV_KEY).text().await?;
     if let Some(txt) = existing {
@@ -81,6 +90,7 @@ async fn handle_get_config(_req: Request, ctx: RouteContext<()>) -> Result<Respo
     log_json("response /config", &cfg);
     let mut resp = Response::from_json(&cfg)?;
     add_cors_headers(&mut resp)?;
+    add_no_cache_headers(&mut resp)?;
     Ok(resp)
 }
 
@@ -112,6 +122,7 @@ async fn handle_update(req: Request, ctx: RouteContext<()>) -> Result<Response> 
     log_json("response /update", &cfg);
     let mut resp = Response::from_json(&cfg)?;
     add_cors_headers(&mut resp)?;
+    add_no_cache_headers(&mut resp)?;
     Ok(resp)
 }
 
@@ -127,6 +138,7 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
     if req.method() == Method::Options {
         let mut resp = Response::ok("")?;
         add_cors_headers(&mut resp)?;
+        add_no_cache_headers(&mut resp)?;
         return Ok(resp);
     }
 
@@ -137,5 +149,6 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
         .run(req, env)
         .await?;
     add_cors_headers(&mut resp)?;
+    add_no_cache_headers(&mut resp)?;
     Ok(resp)
 }
